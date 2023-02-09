@@ -27,7 +27,7 @@ app.use('/api/subs', subRoutes);
 
 let port = 8000;
 app.listen(port, async () => {
-    console.log(`server running at http://localhost:${port}`);
+    console.log(`🚀 server running at http://localhost:${port}`);
 
     AppDataSource.initialize().then(async () => {
         console.log('data initialized');
