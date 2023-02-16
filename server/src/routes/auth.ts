@@ -75,6 +75,7 @@ const login = async (req: Request, res: Response) => {
         // 유저 네임으로 유저 정보 조회
         const user = await User.findOneBy({ userName });
         if (!user) return res.status(400).json({ error: '아이디 또는 비밀번호를 확인해주세요.' });
+        console.log(user);
 
         // 해당 유저의 비밀번호와 입력받은 비밀번호가 일치하는지 확인
         const matchPassword = await bcrypt.compare(password, user.password);
@@ -84,6 +85,7 @@ const login = async (req: Request, res: Response) => {
 
         // ID/PW 모두 일치할 경우 토큰 생성
         const token = jwt.sign({ userName }, process.env.JWT_SECRET);
+        console.log(token);
 
         // 쿠키 저장
         res.set('Set-Cookie', cookie.serialize('token', token, {
