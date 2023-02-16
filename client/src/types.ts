@@ -13,7 +13,7 @@ export interface Sub {
   description: string;
   imageUrn: string;
   bannerUrn: string;
-  username: string;
+  userName: string;
   posts: Post[];
   postCount?: string;
 
@@ -27,7 +27,7 @@ export interface Post {
   slug: string;
   body: string;
   subName: string;
-  username: string;
+  userName: string;
   createdAt: string;
   updatedAt: string;
   sub?: Sub;
@@ -41,7 +41,7 @@ export interface Post {
 export interface Comment {
   identifier: string;
   body: string;
-  username: string;
+  userName: string;
   createdAt: string;
   updatedAt: string;
   post?: Post;

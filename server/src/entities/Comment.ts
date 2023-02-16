@@ -20,6 +20,7 @@ export default class Comment extends AbstractEntity {
 
     @ManyToOne(() => User, (user) => user.posts)
     @JoinColumn({ name: 'userName', referencedColumnName: 'userName' })
+    user: User
 
     @Column()
     postId: number;
