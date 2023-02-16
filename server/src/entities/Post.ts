@@ -51,8 +51,8 @@ export default class Post extends AbstractEntity {
     }
 
     @Expose()
-    get commentCount(): number {
-        return this.comments.length;
+   get commentCount(): number { 
+        return this.comments?.length;
     }
 
     @Expose()

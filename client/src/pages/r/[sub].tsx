@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import useSWR from 'swr';
+import SideBar from '../../components/SideBar';
 // import PostCard from '../../components/PostCard';
 // import SideBar from '../../components/SideBar';
 import { useAuthState } from '../../context/auth';
@@ -13,17 +14,9 @@ const SubPage = () => {
     const { authenticated, user } = useAuthState();
     const fileInputRef = useRef<HTMLInputElement>(null);
     
-    const fetcher = async (url: string) => {
-        try {
-            const res = await axios.get(url);
-            return res.data;
-        } catch (error: any) {
-            throw error.response.data;
-        }
-    }
     const router = useRouter();
     const subName = router.query.sub;
-    const { data: sub } = useSWR(subName ? `/subs/${subName}` : null, fetcher);
+    const { data: sub } = useSWR(subName ? `/subs/${subName}` : null);
 
     useEffect(() => {
         if (!sub || !user) return;
@@ -124,8 +117,8 @@ const SubPage = () => {
                     </div>
                     {/* 포스트와 사이드바 */}
                     <div className='flex max-w-5xl px-4 pt-5 mx-auto'>
-                        {/* <div className='w-full md:mr-3 md:w-8/12'>{renderPosts} </div>
-                        <SideBar sub={sub} /> */}
+                        <div className='w-full md:mr-3 md:w-8/12'> </div>
+                        <SideBar sub={sub} />
                     </div>
                 </>
             }
