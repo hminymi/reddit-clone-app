@@ -2,6 +2,7 @@ import axios from 'axios';
 import Link from 'next/link';
 import React from 'react';
 import { useAuthDispatch, useAuthState } from '../context/auth';
+import Image from 'next/image';
 
 const NavBar = () => {
     const { loading, authenticated } = useAuthState();
@@ -22,13 +23,13 @@ const NavBar = () => {
         <div className='fixed inset-x-0 top-0 z-10 flex items-center justify-between px-5 bg-white h-13 p-5'>
             <span className='text-2xl font-semibold text-gray-400'>
                 <Link href='/'>
-                    {/* <Image
+                    <Image
                         src='/reddit-name-logo.png'
                         alt='logo'
                         width={80}
                         height={45}
                     >
-                    </Image> */}
+                    </Image>
                 </Link>
             </span>
             <div className='max-w-full px-4'>
