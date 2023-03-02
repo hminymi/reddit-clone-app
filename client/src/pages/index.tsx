@@ -1,30 +1,78 @@
 import axios from 'axios';
 import { NextPage } from 'next';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import useSWR from 'swr';
-import { Sub } from '../types';
+import { Post, Sub } from '../types';
 import { useAuthState } from '../context/auth';
 import Image from 'next/image';
+import useSWRInfinite from 'swr/infinite';
+import PostCard from '../components/PostCard';
 
 const Home: NextPage = () => {
   const { authenticated } = useAuthState();
-  
+
   const address = '/subs/sub/topSubs';
-  const {data: topSubs} = useSWR<Sub[]>(address);
+  const { data: topSubs } = useSWR<Sub[]>(address);
+
+  const getKey = (pageIndex: number, previousPageData: Post[]) => {
+    if (previousPageData && !previousPageData.length) return null;
+    return `/posts?page=${pageIndex}`;
+  }
+  const { data, error, size: page, setSize: setPage, isValidating, mutate } = useSWRInfinite<Post[]>(getKey);
+  const isInitialLoading = !data && !error;
+  const posts: Post[] = data ? ([] as Post[]).concat(...data) : [];
+
+  const [observedPost, setObservedPost] = useState("");
+
+  useEffect(() => {
+    if (!posts || posts.length === 0) return;
+
+    // posts 배열에 마지막 post id를 추가
+    const id = posts[posts.length - 1].identifier;
+
+    // 추가된 post id를 obsevedPost로 set 
+    if (id !== observedPost) {
+      setObservedPost(id);
+      observeElement(document.getElementById(id));
+    }
+  }, [posts])
+
+  const observeElement = (element: HTMLElement | null) => {
+    if (!element) return;
+
+    // 브라우저 뷰포트(ViewPort)와 설정한 요소(Element)의 교차점을 관찰
+    const observer = new IntersectionObserver(
+      // entries는 IntersectionObserverEntry 인스턴스의 배열
+      (entries) => {
+        // isIntersecting: 관찰 대상의 교차 상태(Boolean)
+        if (entries[0].isIntersecting === true) {
+          setPage(page + 1);
+          observer.unobserve(element);
+        }
+      },
+      {
+        // 요소의 위치가 viewport에 모두 들어왔을 때 observer 실행
+        // (0.5 : 반절 들어왔을 때, 0.25 : 1/4 들어왔을 때 ...)
+        threshold: 1
+      }
+    );
+    // 대상 요소의 관찰을 시작
+    observer.observe(element);
+  }
 
   return (
     <div className='flex max-w-5xl px-4 pt-5 mx-auto'>
       {/* 포스트 리스트 */}
       <div className='w-full md:mr-3 md:w-8/12'>
-        {/* {isInitialLoading && <p className="text-lg text-center">로딩중입니다...</p>}
+        {isInitialLoading && <p className="text-lg text-center">로딩중입니다...</p>}
         {posts?.map(post => (
           <PostCard
             key={post.identifier}
             post={post}
             mutate={mutate}
           />
-        ))} */}
+        ))}
 
       </div>
 
@@ -43,16 +91,16 @@ const Home: NextPage = () => {
                 className="flex items-center px-4 py-2 text-xs border-b"
               >
                 <Link href={`/r/${sub.name}`}>
-                    <Image
-                      src={sub.imageUrl}
-                      className="rounded-full cursor-pointer"
-                      alt="Sub"
-                      width={24}
-                      height={24}
-                    />
+                  <Image
+                    src={sub.imageUrl}
+                    className="rounded-full cursor-pointer"
+                    alt="Sub"
+                    width={24}
+                    height={24}
+                  />
                 </Link>
                 <Link href={`/r/${sub.name}`} className='ml-2 font-bold hover:cursor-pointer'>
-                    /r/{sub.name}
+                  /r/{sub.name}
                 </Link>
                 <p className='ml-auto font-md'>{sub.postCount}</p>
               </div>
@@ -62,7 +110,7 @@ const Home: NextPage = () => {
           {authenticated &&
             <div className='w-full py-6 text-center'>
               <Link href="/subs/create" className='w-full p-2 text-center text-white bg-gray-400 rounded'>
-                  커뮤니티 만들기
+                커뮤니티 만들기
               </Link>
             </div>
           }
