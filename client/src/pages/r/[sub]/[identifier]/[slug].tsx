@@ -99,8 +99,8 @@ const PostPage = () => {
                       Posted by
                       <i className='fas fa-abacus'></i>
 
-                      <Link href={`/u/${post.userName}`} className='mx-1 hover:underline'>
-                        /u/{post.userName}
+                      <Link href={`/u/${post.username}`} className='mx-1 hover:underline'>
+                        /u/{post.username}
                       </Link>
                       <Link href={post.url} className='mx-1 hover:underline'>
                         {dayjs(post.createdAt).format('YYYY-MM-DD HH:mm')}
@@ -125,8 +125,8 @@ const PostPage = () => {
                 {authenticated ?
                   (<div>
                     <p className='mb-1 text-xs'>
-                      <Link href={`/u/${user?.userName}`} className='font-semibold text-blue-500'>
-                        {user?.userName}
+                      <Link href={`/u/${user?.username}`} className='font-semibold text-blue-500'>
+                        {user?.username}
                       </Link>
                       {' '}으로 댓글 작성
                     </p>
@@ -195,8 +195,8 @@ const PostPage = () => {
                   {/* 댓글 내용 */}
                   <div className='py-2 pr-2'>
                     <p className='mb-1 text-xs leading-none'>
-                      <Link href={`/u/${comment.userName}`} className='mr-1 font-bold hover:underline'>
-                        {comment.userName}
+                      <Link href={`/u/${comment.username}`} className='mr-1 font-bold hover:underline'>
+                        {comment.username}
                       </Link>
                       <span className='text-gray-600'>
                         {`

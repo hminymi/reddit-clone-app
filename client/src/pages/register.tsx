@@ -6,7 +6,7 @@ import InputGroup from '../components/InputGroup';
 
 const Register = () => {
     const [email, setEmail] = useState('');
-    const [userName, setUserName] = useState('');
+    const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState<any>({});
 
@@ -18,7 +18,7 @@ const Register = () => {
             const res = await axios.post('/auth/register', {
                 email,
                 password,
-                userName
+                username
             })
             console.log('res', res);
             router.push('/login');
@@ -27,7 +27,7 @@ const Register = () => {
             setErrors(error.response.data || {});
         }
     }
-    
+
     return (
         <div className='bg-white'>
             <div className='flex flex-col items-center justify-center h-screen p-6'>
@@ -43,8 +43,8 @@ const Register = () => {
 
                         <InputGroup
                             placeholder={'Username'}
-                            value={userName}
-                            error={errors.userName}
+                            value={username}
+                            error={errors.username}
                             setValue={setUserName}
                         />
 

@@ -1,5 +1,5 @@
 export interface User {
-  userName: string;
+  username: string;
   email: string;
   createdAt: string;
   updatedAt: string;
@@ -13,7 +13,7 @@ export interface Sub {
   description: string;
   imageUrn: string;
   bannerUrn: string;
-  userName: string;
+  username: string;
   posts: Post[];
   postCount?: string;
 
@@ -27,7 +27,7 @@ export interface Post {
   slug: string;
   body: string;
   subName: string;
-  userName: string;
+  username: string;
   createdAt: string;
   updatedAt: string;
   sub?: Sub;
@@ -41,7 +41,7 @@ export interface Post {
 export interface Comment {
   identifier: string;
   body: string;
-  userName: string;
+  username: string;
   createdAt: string;
   updatedAt: string;
   post?: Post;

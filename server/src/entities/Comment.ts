@@ -11,21 +11,21 @@ export default class Comment extends AbstractEntity {
     @Index()
     @Column({ unique: true })
     identifier: string;
-    
+
     @Column()
     body: string;
 
     @Column()
-    userName: string;
+    username: string;
 
     @ManyToOne(() => User, (user) => user.posts)
-    @JoinColumn({ name: 'userName', referencedColumnName: 'userName' })
+    @JoinColumn({ name: 'username', referencedColumnName: 'username' })
     user: User
 
     @Column()
     postId: number;
 
-    @ManyToOne(() => Post, (post) => post.comments, {nullable: false})
+    @ManyToOne(() => Post, (post) => post.comments, { nullable: false })
     post: Post;
 
     @Exclude()
@@ -35,7 +35,7 @@ export default class Comment extends AbstractEntity {
     protected userVote: number;
 
     setUserVote(user: User) {
-        const index = this.votes?.findIndex(v => v.userName === user.userName);
+        const index = this.votes?.findIndex(v => v.username === user.username);
         this.userVote = index > -1 ? this.votes[index].value : 0;
     }
 

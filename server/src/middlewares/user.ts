@@ -9,9 +9,9 @@ export default async (req: Request, res: Response, next: NextFunction) => {
         console.log(token);
         if (!token) return next();
 
-        const { userName }: any = jwt.verify(token, process.env.JWT_SECRET);
+        const { username }: any = jwt.verify(token, process.env.JWT_SECRET);
 
-        const user = await User.findOneBy({ userName });
+        const user = await User.findOneBy({ username });
         console.log(user);
 
         // 유저 정보가 없을 경우 throw error

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import React from 'react';
 import { useAuthDispatch, useAuthState } from '../context/auth';
 import Image from 'next/image';
+import { FaSearch } from 'react-icons/fa';
 
 const NavBar = () => {
     const { loading, authenticated } = useAuthState();
@@ -34,10 +35,10 @@ const NavBar = () => {
             </span>
             <div className='max-w-full px-4'>
                 <div className='relative flex items-center bg-gray-100 border rounded hover:border-gray-700 hover:bg-white'>
-                    {/* <FaSearch className='ml-2 text-gray-400' /> */}
+                    <FaSearch className='ml-2 text-gray-400' />
                     <input
                         type='text'
-                        placeholder='Search...'
+                        placeholder='Search Reddit'
                         className='px-3 py-1 bg-transparent rounded h-7 focus:outline-none'
                     />
                 </div>
@@ -55,10 +56,10 @@ const NavBar = () => {
                     ) : (
                         <>
                             <Link href='/login' className='w-20 px-2 pt-1 mr-2 text-sm text-center text-blue-500 border border-blue-500 rounded h-7'>
-                                    로그인
+                                로그인
                             </Link>
                             <Link href='/register' className='w-20 px-2 pt-1 text-sm text-center text-white bg-gray-400 rounded h-7'>
-                                    회원가입
+                                회원가입
                             </Link>
                         </>
                     )

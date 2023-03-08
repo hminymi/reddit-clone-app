@@ -27,10 +27,10 @@ export default class Post extends AbstractEntity {
     subName: string;
 
     @Column()
-    userName: string;
+    username: string;
 
     @ManyToOne(() => User, (user) => user.posts)
-    @JoinColumn({ name: 'userName', referencedColumnName: 'userName' })
+    @JoinColumn({ name: 'username', referencedColumnName: 'username' })
     user: User;
 
     @ManyToOne(() => Sub, (sub) => sub.posts)
@@ -51,7 +51,7 @@ export default class Post extends AbstractEntity {
     }
 
     @Expose()
-   get commentCount(): number { 
+    get commentCount(): number {
         return this.comments?.length;
     }
 
@@ -63,7 +63,7 @@ export default class Post extends AbstractEntity {
     protected userVote: number;
 
     setUserVote(user: User) {
-        const index = this.votes?.findIndex(v => v.userName === user.userName);
+        const index = this.votes?.findIndex(v => v.username === user.username);
         this.userVote = index > -1 ? this.votes[index].value : 0;
     }
 

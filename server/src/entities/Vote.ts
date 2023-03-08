@@ -10,10 +10,10 @@ export default class Vote extends AbstractEntity {
     value: number;
 
     @Column()
-    userName: string;
+    username: string;
 
     @ManyToOne(() => User, (user) => user.posts)
-    @JoinColumn({ name: 'userName', referencedColumnName: 'userName' })
+    @JoinColumn({ name: 'username', referencedColumnName: 'username' })
     user: User;
 
     @Column({ nullable: true })

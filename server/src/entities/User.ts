@@ -16,7 +16,7 @@ export default class User extends AbstractEntity {
     @Index()
     @Length(3, 23, { message: '사용자 이름은 3자 이상이어야 합니다' })
     @Column({ unique: true })
-    userName: string;
+    username: string;
 
     @Length(6, 255, { message: '비밀번호는 6자리 이상이어야 합니다.' })
     @Column()

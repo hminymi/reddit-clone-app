@@ -23,7 +23,7 @@ const getSub = async (req: Request, res: Response) => {
       order: { createdAt: 'DESC' },
       relations: ['comments', 'votes'],
     });
-    
+
     sub.posts = posts;
 
     if (res.locals.user) {
@@ -100,14 +100,14 @@ const ownSub = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const sub = await Sub.findOneOrFail({ where: { name: req.params.name } });
 
-    if (sub.userName !== user.userName) {
+    if (sub.username !== user.username) {
       return res
         .status(403)
         .json({ error: '이 커뮤니티를 소유하고 있지 않습니다.' });
     }
 
     res.locals.sub = sub;
-    
+
     next();
   } catch (error) {
     console.log(error);

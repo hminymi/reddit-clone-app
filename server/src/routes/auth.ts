@@ -15,21 +15,21 @@ const mapErrors = (errors: Object[]) => {
 }
 
 const me = async (_: Request, res: Response) => {
-  return res.json(res.locals.user);
+    return res.json(res.locals.user);
 };
 
 const register = async (req: Request, res: Response) => {
-    const { email, userName, password } = req.body;
+    const { email, username, password } = req.body;
 
     try {
         let errors: any = {};
 
-        // email과 userName이 이미 가입된 상태인지 확인
+        // email과 username이 이미 가입된 상태인지 확인
         const hasEmail = await User.findOneBy({ email });
-        const hasUser = await User.findOneBy({ userName });
+        const hasUser = await User.findOneBy({ username });
 
         if (hasEmail) errors.email = '이미 사용된 이메일 주소입니다.';
-        if (hasUser) errors.userName = '이미 사용중인 이름입니다.';
+        if (hasUser) errors.username = '이미 사용중인 이름입니다.';
 
         // 이미 가입된 사용자일 경우 에러 리턴
         if (Object.keys(errors).length > 0) {
@@ -39,7 +39,7 @@ const register = async (req: Request, res: Response) => {
         // 회원 정보를 담기 위한 객체 생성
         const user = new User();
         user.email = email;
-        user.userName = userName;
+        user.username = username;
         user.password = password;
 
         // Entity 내 정해진 조건으로 유효성 검사
@@ -60,20 +60,20 @@ const register = async (req: Request, res: Response) => {
 }
 
 const login = async (req: Request, res: Response) => {
-    const { email, userName, password } = req.body;
+    const { email, username, password } = req.body;
 
     try {
         let errors: any = {};
 
         // ID/PW가 입력되지 않은 경우 에러 리턴
-        if (isEmpty(userName)) errors.userName = '사용자 이름을 입력해주세요.';
+        if (isEmpty(username)) errors.username = '사용자 이름을 입력해주세요.';
         if (isEmpty(password)) errors.password = '비밀번호를 입력해주세요.';
         if (Object.keys(errors).length > 0) {
             return res.status(400).json(errors);
         }
 
         // 유저 네임으로 유저 정보 조회
-        const user = await User.findOneBy({ userName });
+        const user = await User.findOneBy({ username });
         if (!user) return res.status(400).json({ error: '아이디 또는 비밀번호를 확인해주세요.' });
         console.log(user);
 
@@ -84,7 +84,7 @@ const login = async (req: Request, res: Response) => {
         }
 
         // ID/PW 모두 일치할 경우 토큰 생성
-        const token = jwt.sign({ userName }, process.env.JWT_SECRET);
+        const token = jwt.sign({ username }, process.env.JWT_SECRET);
         console.log(token);
 
         // 쿠키 저장
@@ -102,17 +102,17 @@ const login = async (req: Request, res: Response) => {
 }
 
 const logout = async (_: Request, res: Response) => {
-  res.set(
-    'Set-Cookie',
-    cookie.serialize('token', '', {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      expires: new Date(0),
-      path: '/',
-    })
-  );
-  res.status(200).json({ success: true });
+    res.set(
+        'Set-Cookie',
+        cookie.serialize('token', '', {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            expires: new Date(0),
+            path: '/',
+        })
+    );
+    res.status(200).json({ success: true });
 };
 
 const router = Router();

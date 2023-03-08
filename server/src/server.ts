@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 
 import authRoutes from './routes/auth';
+import userRoutes from './routes/users';
 import subRoutes from './routes/subs';
 import postRoutes from './routes/posts';
 import voteRoutes from './routes/votes';
@@ -25,6 +26,7 @@ app.use(cookieParser());
 
 app.get('/', (_, res) => res.send('running'));
 app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
 app.use('/api/subs', subRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/votes', voteRoutes);

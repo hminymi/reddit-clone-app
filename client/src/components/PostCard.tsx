@@ -26,7 +26,7 @@ const PostCard = ({
         userVote,
         commentCount,
         url,
-        userName,
+        username,
         sub
     },
     mutate,
@@ -95,7 +95,7 @@ const PostCard = ({
                                 />
                             </Link>
                             <Link href={`/r/${subName}`} className='ml-2 text-xs font-bold cursor-pointer hover:underline'>
-                                /r/{subName}
+                                {subName}
                             </Link>
                             <span className='mx-1 text-xs text-gray-400'>•</span>
                         </div>
@@ -103,7 +103,7 @@ const PostCard = ({
 
                     <p className='text-xs text-gray-400'>
                         Posted by
-                        <Link href={`/u/${userName}`} className='mx-1 hover:underline'>/u/{userName}</Link>
+                        <Link href={`/u/${username}`} className='mx-1 hover:underline'>{username}</Link>
                         <Link href={url} className='mx-1 hover:underline'>
                             {dayjs(createdAt).format('YYYY-MM-DD HH:mm')}
                         </Link>

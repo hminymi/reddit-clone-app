@@ -22,10 +22,10 @@ const vote = async (req: Request, res: Response) => {
         if (commentIdentifier) {
             // 댓글 식별자가 있는 경우 댓글로 vote 찾기
             comment = await Comment.findOneByOrFail({ identifier: commentIdentifier });
-            vote = await Vote.findOneBy({ userName: user.userName, commentId: comment.id });
+            vote = await Vote.findOneBy({ username: user.username, commentId: comment.id });
         } else {
             // 포스트로 vote 찾기
-            vote = await Vote.findOneBy({ userName: user.userName, postId: post.id });
+            vote = await Vote.findOneBy({ username: user.username, postId: post.id });
         }
 
         if (!vote && value === 0) {

@@ -7,7 +7,7 @@ import { useAuthDispatch, useAuthState } from '../context/auth';
 
 const login = () => {
     let router = useRouter();
-    const [userName, setUserName] = useState('');
+    const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState<any>({});
     const { authenticated } = useAuthState();
@@ -19,7 +19,7 @@ const login = () => {
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
         try {
-            const res = await axios.post('/auth/login', { password, userName });
+            const res = await axios.post('/auth/login', { password, username });
 
             // 로그인 한 유저 정보를 context에 저장
             dispatch('LOGIN', res.data?.user);
@@ -39,9 +39,9 @@ const login = () => {
                     <form onSubmit={handleSubmit}>
                         <InputGroup
                             placeholder='Username'
-                            value={userName}
+                            value={username}
                             setValue={setUserName}
-                            error={errors.error || errors.userName}
+                            error={errors.error || errors.username}
                         />
                         <InputGroup
                             placeholder='Password'
