@@ -5,8 +5,6 @@ import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import useSWR from 'swr';
 import PostCard from '../../components/PostCard';
 import SideBar from '../../components/SideBar';
-// import PostCard from '../../components/PostCard';
-// import SideBar from '../../components/SideBar';
 import { useAuthState } from '../../context/auth';
 import { Post } from '../../types';
 
